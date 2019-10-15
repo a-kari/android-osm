@@ -3,6 +3,7 @@ package jp.neechan.osmtest.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.neechan.osmtest.R
 import org.osmdroid.api.IMapController
@@ -39,11 +40,11 @@ object OsmUtils {
         return GeoPoint(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
     }
 
-    fun getMarkerBitmap(context: Context): Bitmap? {
+    fun getMyLocationMarker(context: Context): Bitmap? {
         return try {
             val drawable = ContextCompat.getDrawable(context, R.drawable.ic_marker)
-            val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
+            val bitmap   = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas   = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)
             drawable.draw(canvas)
             bitmap
@@ -51,5 +52,9 @@ object OsmUtils {
         } catch (e: OutOfMemoryError) {
             null
         }
+    }
+
+    fun getFavoritePlaceMarker(context: Context): Drawable {
+        return ContextCompat.getDrawable(context, R.drawable.ic_favorite)!!
     }
 }

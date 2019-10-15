@@ -1,8 +1,8 @@
 package jp.neechan.osmtest
 
+import android.content.Context
 import android.graphics.Canvas
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.neechan.osmtest.R
@@ -21,27 +21,32 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var myLocationOverlay: MyLocationNewOverlay
-    private lateinit var touchOverlay: Overlay
-    private var favoritePlacesOverlay: ItemizedIconOverlay<OverlayItem>? = null
-    private val favoritePlaces = mutableListOf<OverlayItem>()
+    private lateinit var myLocationOverlay:     MyLocationNewOverlay
+    private lateinit var touchOverlay:          Overlay
+    private lateinit var favoritePlacesOverlay: ItemizedIconOverlay<OverlayItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (PermissionUtils.checkPermissions(this)) {
             setupMap()
+            setupMyLocation()
+            setupFavoritePlaces()
         }
     }
 
     private fun setupMap() {
-        Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
+        Configuration.getInstance().load(
+                applicationContext,
+                applicationContext.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
 
         map.setTileSource(OsmUtils.tileSource)
         map.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
         map.setMultiTouchControls(true)
         map.controller.setCenter(OsmUtils.getMapCenter(map.controller))
+    }
 
+    private fun setupMyLocation() {
         myLocationOverlay = MyLocationNewOverlay(NetworkLocationProvider(applicationContext), map)
         myLocationOverlay.enableMyLocation()
         myLocationOverlay.setPersonIcon(OsmUtils.getMyLocationMarker(this))
@@ -51,6 +56,12 @@ class MainActivity : AppCompatActivity() {
             map.overlays.add(myLocationOverlay)
             map.invalidate()
         }
+    }
+
+    private fun setupFavoritePlaces() {
+        favoritePlacesOverlay = ItemizedIconOverlay(applicationContext, OsmUtils.getSampleFavoritePlaces(applicationContext), null)
+        map.overlays.add(favoritePlacesOverlay)
+        map.invalidate()
 
         touchOverlay = object : Overlay() {
             override fun draw(arg0: Canvas, arg1: MapView, arg2: Boolean) {}
@@ -62,18 +73,12 @@ class MainActivity : AppCompatActivity() {
 
                 val favoritePlace = OverlayItem("Favorite", "It's a cool place!", GeoPoint(latitude, longitude))
                 favoritePlace.setMarker(OsmUtils.getFavoritePlaceMarker(applicationContext))
-                favoritePlaces.add(favoritePlace)
-
-                if (map.overlays.contains(favoritePlacesOverlay)) {
-                    map.overlays.remove(favoritePlacesOverlay)
-                }
-                favoritePlacesOverlay = ItemizedIconOverlay(applicationContext, favoritePlaces, null)
-                map.overlays.add(favoritePlacesOverlay)
+                favoritePlacesOverlay.addItem(favoritePlace)
                 map.invalidate()
+
                 return true
             }
         }
-
         map.overlays.add(touchOverlay)
     }
 

@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="jp.neechan.osmtest.MainActivity">
+        <activity android:name="jp.neechan.osmtest.views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -25,6 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="jp.neechan.osmtest.views.FavoritePlaceActivity" />
 
     </application>
 

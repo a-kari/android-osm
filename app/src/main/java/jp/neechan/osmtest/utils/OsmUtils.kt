@@ -6,12 +6,12 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.neechan.osmtest.R
+import jp.neechan.osmtest.models.FavoritePlace
 import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.ITileSource
 import org.osmdroid.tileprovider.tilesource.TileSourcePolicy
 import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.overlay.OverlayItem
 
 object OsmUtils {
 
@@ -59,19 +59,11 @@ object OsmUtils {
         return ContextCompat.getDrawable(context, R.drawable.ic_favorite)!!
     }
 
-    fun getSampleFavoritePlaces(context: Context): List<OverlayItem> {
-        val sampleFavoriteCoordinates = mutableListOf<Pair<Double, Double>>()
-        sampleFavoriteCoordinates.add(Pair(43.21454822717907, 76.93775752702777))
-        sampleFavoriteCoordinates.add(Pair(43.219253427502906, 76.91470441099585))
-        sampleFavoriteCoordinates.add(Pair(43.23930244761985, 76.91812900929176))
-
-        val sampleFavoritePlaces = mutableListOf<OverlayItem>()
-        for (coordinates in sampleFavoriteCoordinates) {
-            val favoritePlace = OverlayItem("Favorite", "It's a cool place!", GeoPoint(coordinates.first, coordinates.second))
-            favoritePlace.setMarker(getFavoritePlaceMarker(context))
-            sampleFavoritePlaces.add(favoritePlace)
-        }
-
-        return sampleFavoritePlaces
+    fun getSampleFavoritePlaces(): List<FavoritePlace> {
+        val favoritePlaces = mutableListOf<FavoritePlace>()
+        favoritePlaces.add(FavoritePlace(1, "Dostyk Plaza", 43.2334, 76.9566))
+        favoritePlaces.add(FavoritePlace(2, "Stadium", 43.2384, 76.924))
+        favoritePlaces.add(FavoritePlace(3, "Botanical Garden", 43.2195, 76.9144))
+        return favoritePlaces
     }
 }

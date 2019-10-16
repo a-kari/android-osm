@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:padding="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_button"
+        android:padding="16dp"
         android:text="Show my location"
         android:textColor="@android:color/white" />
 

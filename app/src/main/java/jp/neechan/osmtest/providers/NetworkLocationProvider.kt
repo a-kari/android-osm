@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.utils
+package jp.neechan.osmtest.providers
 
 import android.annotation.SuppressLint
 import android.content.Context

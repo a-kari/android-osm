@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.neechan.osmtest.R
-import jp.neechan.osmtest.models.FavoritePlace
+import jp.neechan.osmtest.models.Bookmark
 import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.ITileSource
 import org.osmdroid.tileprovider.tilesource.TileSourcePolicy
@@ -55,15 +55,15 @@ object OsmUtils {
         }
     }
 
-    fun getFavoritePlaceMarker(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.ic_favorite)!!
+    fun getBookmarkMarker(context: Context): Drawable {
+        return ContextCompat.getDrawable(context, R.drawable.ic_bookmark)!!
     }
 
-    fun getSampleFavoritePlaces(): List<FavoritePlace> {
-        val favoritePlaces = mutableListOf<FavoritePlace>()
-        favoritePlaces.add(FavoritePlace(1, "Dostyk Plaza", 43.2334, 76.9566))
-        favoritePlaces.add(FavoritePlace(2, "Stadium", 43.2384, 76.924))
-        favoritePlaces.add(FavoritePlace(3, "Botanical Garden", 43.2195, 76.9144))
-        return favoritePlaces
+    fun getSampleBookmarks(): List<Bookmark> {
+        val bookmarks = mutableListOf<Bookmark>()
+        bookmarks.add(Bookmark(1, "Dostyk Plaza", 43.2334, 76.9566))
+        bookmarks.add(Bookmark(2, "Stadium", 43.2384, 76.924))
+        bookmarks.add(Bookmark(3, "Botanical Garden", 43.2195, 76.9144))
+        return bookmarks
     }
 }

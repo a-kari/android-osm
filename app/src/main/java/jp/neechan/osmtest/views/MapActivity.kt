@@ -5,14 +5,17 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.MotionEvent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.neechan.osmtest.R
-import jp.neechan.osmtest.models.FavoritePlace
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import jp.neechan.osmtest.models.Bookmark
 import jp.neechan.osmtest.providers.NetworkLocationProvider
 import jp.neechan.osmtest.utils.OsmUtils
 import jp.neechan.osmtest.utils.PermissionUtils
-import jp.neechan.osmtest.views.markers.FavoritePlaceInfoWindow
-import jp.neechan.osmtest.views.markers.FavoritePlaceMarker
+import jp.neechan.osmtest.viewmodels.MapViewModel
+import jp.neechan.osmtest.views.markers.BookmarkInfoWindow
+import jp.neechan.osmtest.views.markers.BookmarkMarker
 import kotlinx.android.synthetic.main.activity_main.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
@@ -20,20 +23,22 @@ import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import java.util.*
 
-class MainActivity : AppCompatActivity(), FavoritePlaceMarker.MarkerClickCallback,
-                     FavoritePlaceInfoWindow.InfoWindowClickCallback {
+class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
+                    BookmarkInfoWindow.InfoWindowClickCallback {
 
+    private lateinit var viewModel:         MapViewModel
     private lateinit var myLocationOverlay: MyLocationNewOverlay
     private lateinit var touchOverlay:      Overlay
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+
         if (PermissionUtils.checkPermissions(this)) {
             setupMap()
             setupMyLocation()
-            setupFavoritePlaces()
+            setupBookmarks()
         }
     }
 
@@ -61,47 +66,54 @@ class MainActivity : AppCompatActivity(), FavoritePlaceMarker.MarkerClickCallbac
         }
     }
 
-    private fun setupFavoritePlaces() {
+    private fun setupBookmarks() {
         touchOverlay = object : Overlay() {
             override fun draw(arg0: Canvas, arg1: MapView, arg2: Boolean) {}
 
             override fun onSingleTapConfirmed(e: MotionEvent, map: MapView): Boolean {
-                val location      = map.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
-                val latitude      = location.latitude
-                val longitude     = location.longitude
-                val favoritePlace = FavoritePlace(Math.abs(Random().nextLong()), "Favorite", latitude, longitude)
-                val marker        = FavoritePlaceMarker(favoritePlace, map, this@MainActivity, this@MainActivity)
+                val location  = map.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
+                val latitude  = location.latitude
+                val longitude = location.longitude
 
-                map.overlayManager.add(marker)
-                map.invalidate()
+                viewModel.searchAddressByCoordinates(latitude, longitude)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe { address ->
+                            if (address?.address != null) {
+                                val bookmark = Bookmark(address.id, address.address, latitude, longitude)
+                                val marker   = BookmarkMarker(bookmark, map, this@MapActivity, this@MapActivity)
+                                map.overlayManager.add(marker)
+                                map.invalidate()
+                            }
+                        }
                 return true
             }
         }
         map.overlays.add(touchOverlay)
 
-        val sampleFavoritePlaces = OsmUtils.getSampleFavoritePlaces()
-        for (sampleFavoritePlace in sampleFavoritePlaces) {
-            map.overlayManager.add(FavoritePlaceMarker(sampleFavoritePlace, map, this, this))
+        val sampleBookmarks = OsmUtils.getSampleBookmarks()
+        for (sampleBookmark in sampleBookmarks) {
+            map.overlayManager.add(BookmarkMarker(sampleBookmark, map, this, this))
         }
     }
 
-    override fun onMarkerClick(placeMarker: FavoritePlaceMarker) {
+    override fun onBookmarkClick(bookmark: BookmarkMarker) {
         for (overlay in map.overlays) {
-            if (overlay is FavoritePlaceMarker && overlay != placeMarker) {
+            if (overlay is BookmarkMarker && overlay != bookmark) {
                 overlay.closeInfoWindow()
             }
         }
     }
 
-    override fun onInfoWindowClick(placeMarker: FavoritePlaceMarker) {
-        val favoritePlace = FavoritePlace(
-                            placeMarker.id.toLong(),
-                            placeMarker.title,
-                            placeMarker.position.latitude,
-                            placeMarker.position.longitude)
-        val startFavoritePlace = Intent(this, FavoritePlaceActivity::class.java)
-        startFavoritePlace.putExtra("favoritePlace", favoritePlace)
-        startActivity(startFavoritePlace)
+    override fun onInfoWindowClick(bookmarkMarker: BookmarkMarker) {
+        val favoritePlace = Bookmark(
+                            bookmarkMarker.id.toLong(),
+                            bookmarkMarker.title,
+                            bookmarkMarker.position.latitude,
+                            bookmarkMarker.position.longitude)
+        val startBookmark = Intent(this, BookmarkActivity::class.java)
+        startBookmark.putExtra("bookmark", favoritePlace)
+        startActivity(startBookmark)
     }
 
     public override fun onResume() {

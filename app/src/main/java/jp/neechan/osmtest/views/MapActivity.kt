@@ -61,6 +61,7 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
 
         showMyLocationButton.setOnClickListener {
             myLocationOverlay.enableFollowLocation()
+            map.controller.setZoom(OsmUtils.DEFAULT_ZOOM)
             map.overlays.add(myLocationOverlay)
             map.invalidate()
         }

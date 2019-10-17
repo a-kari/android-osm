@@ -16,7 +16,7 @@ import jp.neechan.samplebookmarks.utils.PermissionUtils
 import jp.neechan.samplebookmarks.viewmodels.MapViewModel
 import jp.neechan.samplebookmarks.views.markers.BookmarkInfoWindow
 import jp.neechan.samplebookmarks.views.markers.BookmarkMarker
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_map.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
@@ -46,7 +46,7 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
         Configuration.getInstance().load(
                 applicationContext,
                 applicationContext.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE))
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_map)
 
         map.setTileSource(OsmUtils.tileSource)
         map.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)

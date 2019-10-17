@@ -1,13 +1,13 @@
-package jp.neechan.osmtest.views.markers
+package jp.neechan.samplebookmarks.views.markers
 
 import android.widget.TextView
-import com.neechan.osmtest.R
+import jp.neechan.samplebookmarks.R
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 
 class BookmarkInfoWindow(private val map: MapView,
                          private val infoWindowClickCallback: InfoWindowClickCallback)
-                         : MarkerInfoWindow(R.layout.item_favorite_place_info_window, map) {
+                         : MarkerInfoWindow(R.layout.item_bookmark_info_window, map) {
 
     interface InfoWindowClickCallback {
         fun onInfoWindowClick(bookmarkMarker: BookmarkMarker)

@@ -1,8 +1,8 @@
-package jp.neechan.osmtest.views
+package jp.neechan.samplebookmarks.views
 
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import jp.neechan.osmtest.viewmodels.ViewModelFactory
+import jp.neechan.samplebookmarks.viewmodels.ViewModelFactory
 import org.koin.android.ext.android.inject
 
 abstract class BaseActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.views
+package jp.neechan.samplebookmarks.views
 
 import android.content.Context
 import android.content.Intent
@@ -6,16 +6,16 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.lifecycle.ViewModelProviders
-import com.neechan.osmtest.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import jp.neechan.osmtest.models.Bookmark
-import jp.neechan.osmtest.providers.NetworkLocationProvider
-import jp.neechan.osmtest.utils.OsmUtils
-import jp.neechan.osmtest.utils.PermissionUtils
-import jp.neechan.osmtest.viewmodels.MapViewModel
-import jp.neechan.osmtest.views.markers.BookmarkInfoWindow
-import jp.neechan.osmtest.views.markers.BookmarkMarker
+import jp.neechan.samplebookmarks.R
+import jp.neechan.samplebookmarks.models.Bookmark
+import jp.neechan.samplebookmarks.providers.NetworkLocationProvider
+import jp.neechan.samplebookmarks.utils.OsmUtils
+import jp.neechan.samplebookmarks.utils.PermissionUtils
+import jp.neechan.samplebookmarks.viewmodels.MapViewModel
+import jp.neechan.samplebookmarks.views.markers.BookmarkInfoWindow
+import jp.neechan.samplebookmarks.views.markers.BookmarkMarker
 import kotlinx.android.synthetic.main.activity_main.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
@@ -107,13 +107,13 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
     }
 
     override fun onInfoWindowClick(bookmarkMarker: BookmarkMarker) {
-        val favoritePlace = Bookmark(
+        val bookmark = Bookmark(
                             bookmarkMarker.id.toLong(),
                             bookmarkMarker.title,
                             bookmarkMarker.position.latitude,
                             bookmarkMarker.position.longitude)
         val startBookmark = Intent(this, BookmarkActivity::class.java)
-        startBookmark.putExtra("bookmark", favoritePlace)
+        startBookmark.putExtra("bookmark", bookmark)
         startActivity(startBookmark)
     }
 

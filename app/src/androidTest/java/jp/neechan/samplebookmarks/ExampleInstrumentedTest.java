@@ -1,4 +1,4 @@
-package jp.neechan.osmtest;
+package jp.neechan.samplebookmarks;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.osmtest", appContext.getPackageName());
+        assertEquals("jp.neechan.samplebookmarks", appContext.getPackageName());
     }
 }

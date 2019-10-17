@@ -1,7 +1,7 @@
-package jp.neechan.osmtest
+package jp.neechan.samplebookmarks
 
 import android.app.Application
-import jp.neechan.osmtest.di.KoinModule
+import jp.neechan.samplebookmarks.di.KoinModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

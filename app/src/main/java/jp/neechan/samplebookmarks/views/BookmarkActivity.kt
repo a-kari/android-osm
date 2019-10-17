@@ -1,8 +1,8 @@
-package jp.neechan.osmtest.views
+package jp.neechan.samplebookmarks.views
 
 import android.os.Bundle
-import com.neechan.osmtest.R
-import jp.neechan.osmtest.models.Bookmark
+import jp.neechan.samplebookmarks.R
+import jp.neechan.samplebookmarks.models.Bookmark
 import kotlinx.android.synthetic.main.activity_bookmark.*
 
 class BookmarkActivity : BaseActivity() {

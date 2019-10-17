@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.utils
+package jp.neechan.samplebookmarks.utils
 
 import android.Manifest.permission.*
 import android.app.Activity

@@ -1,12 +1,12 @@
-package jp.neechan.osmtest.utils
+package jp.neechan.samplebookmarks.utils
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import com.neechan.osmtest.R
-import jp.neechan.osmtest.models.Bookmark
+import jp.neechan.samplebookmarks.R
+import jp.neechan.samplebookmarks.models.Bookmark
 import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.ITileSource
 import org.osmdroid.tileprovider.tilesource.TileSourcePolicy

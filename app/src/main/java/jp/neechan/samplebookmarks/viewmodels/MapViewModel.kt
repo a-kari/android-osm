@@ -1,9 +1,9 @@
-package jp.neechan.osmtest.viewmodels
+package jp.neechan.samplebookmarks.viewmodels
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.Observable
-import jp.neechan.osmtest.models.Address
-import jp.neechan.osmtest.repositories.AddressesRepository
+import jp.neechan.samplebookmarks.models.Address
+import jp.neechan.samplebookmarks.repositories.AddressesRepository
 
 class MapViewModel(private val addressesRepository: AddressesRepository) : ViewModel() {
 

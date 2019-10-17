@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.models
+package jp.neechan.samplebookmarks.models
 
 import java.io.Serializable
 

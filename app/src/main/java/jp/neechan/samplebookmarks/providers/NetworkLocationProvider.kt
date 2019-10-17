@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.providers
+package jp.neechan.samplebookmarks.providers
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,8 +1,8 @@
-package jp.neechan.osmtest.viewmodels
+package jp.neechan.samplebookmarks.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import jp.neechan.osmtest.repositories.AddressesRepository
+import jp.neechan.samplebookmarks.repositories.AddressesRepository
 
 class ViewModelFactory(private val addressesRepository: AddressesRepository) : ViewModelProvider.Factory {
 

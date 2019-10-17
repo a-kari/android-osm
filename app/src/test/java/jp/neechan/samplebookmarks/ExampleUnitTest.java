@@ -1,4 +1,4 @@
-package jp.neechan.osmtest;
+package jp.neechan.samplebookmarks;
 
 import org.junit.Test;
 

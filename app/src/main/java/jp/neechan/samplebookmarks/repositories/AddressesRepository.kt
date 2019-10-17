@@ -1,8 +1,8 @@
-package jp.neechan.osmtest.repositories
+package jp.neechan.samplebookmarks.repositories
 
 import io.reactivex.Observable
-import jp.neechan.osmtest.models.Address
-import jp.neechan.osmtest.rest.NominatimService
+import jp.neechan.samplebookmarks.models.Address
+import jp.neechan.samplebookmarks.rest.NominatimService
 
 class AddressesRepository(private val nominatimService: NominatimService) {
     

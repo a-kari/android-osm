@@ -1,8 +1,8 @@
-package jp.neechan.osmtest.di
+package jp.neechan.samplebookmarks.di
 
-import jp.neechan.osmtest.repositories.AddressesRepository
-import jp.neechan.osmtest.rest.NominatimService
-import jp.neechan.osmtest.viewmodels.ViewModelFactory
+import jp.neechan.samplebookmarks.repositories.AddressesRepository
+import jp.neechan.samplebookmarks.rest.NominatimService
+import jp.neechan.samplebookmarks.viewmodels.ViewModelFactory
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

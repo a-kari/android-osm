@@ -1,4 +1,4 @@
-package jp.neechan.osmtest.models
+package jp.neechan.samplebookmarks.models
 
 import com.google.gson.annotations.SerializedName
 

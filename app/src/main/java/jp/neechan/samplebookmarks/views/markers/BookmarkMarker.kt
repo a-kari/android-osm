@@ -1,7 +1,7 @@
-package jp.neechan.osmtest.views.markers
+package jp.neechan.samplebookmarks.views.markers
 
-import jp.neechan.osmtest.models.Bookmark
-import jp.neechan.osmtest.utils.OsmUtils
+import jp.neechan.samplebookmarks.models.Bookmark
+import jp.neechan.samplebookmarks.utils.OsmUtils
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker

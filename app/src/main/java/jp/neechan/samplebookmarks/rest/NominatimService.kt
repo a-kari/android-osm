@@ -1,7 +1,7 @@
-package jp.neechan.osmtest.rest
+package jp.neechan.samplebookmarks.rest
 
 import io.reactivex.Observable
-import jp.neechan.osmtest.models.Address
+import jp.neechan.samplebookmarks.models.Address
 import retrofit2.http.GET
 import retrofit2.http.Query
 

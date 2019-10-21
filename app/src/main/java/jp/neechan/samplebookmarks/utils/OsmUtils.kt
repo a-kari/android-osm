@@ -59,6 +59,20 @@ object OsmUtils {
         return ContextCompat.getDrawable(context, R.drawable.ic_bookmark)!!
     }
 
+    fun getClusterMarker(context: Context): Bitmap? {
+        return try {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.ic_cluster)
+            val bitmap   = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas   = Canvas(bitmap)
+            drawable.setBounds(0, 0, canvas.width, canvas.height)
+            drawable.draw(canvas)
+            bitmap
+
+        } catch (e: OutOfMemoryError) {
+            null
+        }
+    }
+
     fun getSampleBookmarks(): List<Bookmark> {
         val bookmarks = mutableListOf<Bookmark>()
         bookmarks.add(Bookmark(1, "Dostyk Plaza", 43.2334, 76.9566))

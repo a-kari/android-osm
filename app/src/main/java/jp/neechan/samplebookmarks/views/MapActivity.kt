@@ -17,6 +17,7 @@ import jp.neechan.samplebookmarks.viewmodels.MapViewModel
 import jp.neechan.samplebookmarks.views.markers.BookmarkInfoWindow
 import jp.neechan.samplebookmarks.views.markers.BookmarkMarker
 import kotlinx.android.synthetic.main.activity_map.*
+import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
@@ -29,6 +30,7 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
 
     private lateinit var viewModel:         MapViewModel
     private lateinit var myLocationOverlay: MyLocationNewOverlay
+    private lateinit var bookmarksOverlay:  RadiusMarkerClusterer
     private lateinit var touchOverlay:      Overlay
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +87,8 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
                             if (address?.address != null) {
                                 val bookmark = Bookmark(address.id, address.address, latitude, longitude)
                                 val marker   = BookmarkMarker(bookmark, map, this@MapActivity, this@MapActivity)
-                                map.overlayManager.add(marker)
+                                bookmarksOverlay.add(marker)
+                                bookmarksOverlay.invalidate()
                                 map.invalidate()
                             }
                         }
@@ -94,14 +97,18 @@ class MapActivity : BaseActivity(), BookmarkMarker.BookmarkClickCallback,
         }
         map.overlays.add(touchOverlay)
 
+        bookmarksOverlay = RadiusMarkerClusterer(this)
+        bookmarksOverlay.setIcon(OsmUtils.getClusterMarker(this)) // Cluster icon.
+        map.overlays.add(bookmarksOverlay)
+
         val sampleBookmarks = OsmUtils.getSampleBookmarks()
         for (sampleBookmark in sampleBookmarks) {
-            map.overlayManager.add(BookmarkMarker(sampleBookmark, map, this, this))
+            bookmarksOverlay.add(BookmarkMarker(sampleBookmark, map, this, this))
         }
     }
 
     override fun onBookmarkClick(bookmark: BookmarkMarker) {
-        for (overlay in map.overlays) {
+        for (overlay in bookmarksOverlay.items) {
             if (overlay is BookmarkMarker && overlay != bookmark) {
                 overlay.closeInfoWindow()
             }
